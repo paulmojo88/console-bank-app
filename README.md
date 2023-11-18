@@ -18,8 +18,15 @@ This is a console application named `bank-console-app` that simulates the operat
 
 ## Setup
 To run this project, you need to have Java 17 and Gradle installed on your machine.
-
 1. Clone the repository
-2. Navigate to the project directory
-3. Run `gradle build` to build the project
-4. Run `gradle run` to start the application
+2. Create a PostgreSQL database named console-bank-app and run the SQL scripts located in the sql folder 
+to create the tables and populate them with some sample data.
+3. Create a database.properties file in the console-bank-app\src\main\resources folder and
+   fill it with your database connection details.  
+The file should have the following format:  
+   url=jdbc:postgresql://your-host:your-port/console-bank-app  
+   user=your-username  
+   password=your-password
+4. Navigate to the project directory
+5. Run `gradle build` to build the project
+6. Run `gradle run` to start the application
