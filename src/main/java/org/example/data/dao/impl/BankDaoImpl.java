@@ -1,8 +1,8 @@
-package dao.impl;
+package org.example.data.dao.impl;
 
-import connection.DataSource;
-import dao.BankDao;
-import entity.Bank;
+import org.example.connection.DataSource;
+import org.example.data.dao.BankDao;
+import org.example.entity.Bank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class BankDaoImpl implements BankDao {
     public Bank getById(Long id) {
         Bank bank = null;
         try (Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

@@ -1,9 +1,9 @@
-package dao;
+package org.example.data.dao;
 
-import dao.impl.AccountDaoImpl;
-import dao.impl.BankDaoImpl;
-import dao.impl.TransactionDaoImpl;
-import dao.impl.UserDaoImpl;
+import org.example.data.dao.impl.AccountDaoImpl;
+import org.example.data.dao.impl.BankDaoImpl;
+import org.example.data.dao.impl.TransactionDaoImpl;
+import org.example.data.dao.impl.UserDaoImpl;
 
 public class DaoFactory {
 
