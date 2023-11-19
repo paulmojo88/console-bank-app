@@ -1,8 +1,8 @@
-package dao.impl;
+package org.example.data.dao.impl;
 
-import connection.DataSource;
-import dao.TransactionDao;
-import entity.Transaction;
+import org.example.connection.DataSource;
+import org.example.data.dao.TransactionDao;
+import org.example.entity.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class TransactionDaoImpl implements TransactionDao {
     public Transaction getById(Long id) {
         Transaction transaction = null;
         try (Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

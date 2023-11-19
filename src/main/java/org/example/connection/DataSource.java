@@ -1,4 +1,4 @@
-package connection;
+package org.example.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

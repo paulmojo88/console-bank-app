@@ -1,8 +1,8 @@
-package dao.impl;
+package org.example.data.dao.impl;
 
-import connection.DataSource;
-import dao.AccountDao;
-import entity.Account;
+import org.example.connection.DataSource;
+import org.example.data.dao.AccountDao;
+import org.example.entity.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class AccountDaoImpl implements AccountDao {
     public Account getById(Long id) {
         Account account = null;
         try (Connection connection = DataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_BY_ID)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
