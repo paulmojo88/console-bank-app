@@ -18,6 +18,7 @@ public class AccountDaoImpl implements AccountDao {
     private static final String SQL_CREATE = "INSERT INTO account (account_number, account_balance, account_type, user_id, bank_id) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE account SET account_number = ?, account_balance = ?, account_type = ?, user_id = ?, bank_id = ? WHERE account_id = ? AND deleted = FALSE";
     private static final String SOFT_DELETE = "UPDATE account SET deleted = TRUE WHERE account_id = ? AND deleted = FALSE";
+    private static final String SQL_GET_ALL_BY_USER_ID = "SELECT * FROM account WHERE user_id = ? AND deleted = FALSE";
 
     @Override
     public Account getById(Long id) {
@@ -125,4 +126,18 @@ public class AccountDaoImpl implements AccountDao {
         }
     }
 
+    @Override
+    public List<Account> getAllByUserId(Long userId) {
+        List<Account> accounts = new ArrayList<>();
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_BY_USER_ID)) {
+            statement.setLong(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                createAccountFromResultSet(accounts, resultSet);
+            }
+        } catch (SQLException e) {
+            logger.error("Error getting all accounts by user id", e);
+        }
+        return accounts;
+    }
 }

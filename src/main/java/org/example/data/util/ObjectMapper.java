@@ -1,5 +1,9 @@
-package org.example.data.dto;
+package org.example.data.util;
 
+import org.example.data.dto.AccountDto;
+import org.example.data.dto.BankDto;
+import org.example.data.dto.TransactionDto;
+import org.example.data.dto.UserDto;
 import org.example.entity.Account;
 import org.example.entity.Bank;
 import org.example.entity.Transaction;
