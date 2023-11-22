@@ -1,0 +1,6 @@
+# This is the configuration file for the Clever-Bank application
+# You can change the values of the parameters below as needed
+
+# The interest rate to be applied to the account balance at the end of the month
+# The value is in percentage and must be positive
+interest_rate: 1.0
