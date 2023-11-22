@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -78,5 +79,43 @@ public class AccountServiceImplTest {
         assertNotNull(accountDto);
         accountService.deleteAccount(accountDto);
         assertNull(accountService.getAccountById(1L));
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {100.00, 200.00, 300.00})
+    void replenish(double amount) {
+        AccountDto accountDto = accountService.getAccountById(2L);
+        double oldBalance = accountDto.getAccountBalance();
+        accountService.replenish(accountDto, amount);
+        AccountDto replenishedAccountDto = accountService.getAccountById(2L);
+        assertEquals(oldBalance + amount, replenishedAccountDto.getAccountBalance());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {100.00, 200.00, 300.00})
+    void withdraw(double amount) {
+        AccountDto accountDto = accountService.getAccountById(2L);
+        double oldBalance = accountDto.getAccountBalance();
+        accountService.withdraw(accountDto, amount);
+        AccountDto withdrawedAccountDto = accountService.getAccountById(2L);
+        assertEquals(oldBalance - amount, withdrawedAccountDto.getAccountBalance());
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {100.00, 50.00, 100.00})
+    void transfer(double amount) {
+        AccountDto senderAccountDto = accountService.getAccountById(1L);
+        AccountDto recipientAccountDto = accountService.getAccountById(2L);
+
+        double oldSenderBalance = senderAccountDto.getAccountBalance();
+        double oldRecipientBalance = recipientAccountDto.getAccountBalance();
+
+        accountService.transfer(senderAccountDto, recipientAccountDto, amount);
+
+        AccountDto tranferedSenderAccountDto = accountService.getAccountById(1L);
+        AccountDto tranferedRecipientAccountDto = accountService.getAccountById(2L);
+
+        assertEquals(oldSenderBalance - amount, tranferedSenderAccountDto.getAccountBalance());
+        assertEquals(oldRecipientBalance + amount, tranferedRecipientAccountDto.getAccountBalance());
     }
 }
