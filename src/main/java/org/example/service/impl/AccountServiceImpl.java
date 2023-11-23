@@ -19,6 +19,9 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -229,6 +232,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountDao.getById(transaction.getAccountId());
         Account recipientAccount = accountDao.getById(transaction.getRecipientAccountId());
         String fileName = String.format(RECEIPT_FORMAT, transaction.getCheckNumber(), operation);
+        createDirectoryIfNotExists(RECEIPT_FOLDER);
         File file = new File(RECEIPT_FOLDER, fileName);
         try {
             Document document = new Document();
@@ -252,6 +256,20 @@ public class AccountServiceImpl implements AccountService {
             logger.info("Generated receipt for account {} and operation {}", transaction, operation);
         } catch (DocumentException | IOException e) {
             logger.error("Error generating receipt", e);
+        }
+    }
+
+    private void createDirectoryIfNotExists(String directoryPath) {
+        Path path = Paths.get(directoryPath);
+        if (!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+                logger.info("Directory created at: " + path.toAbsolutePath());
+            } catch (Exception e) {
+                logger.error("Failed to create directory: " + e.getMessage());
+            }
+        } else {
+            logger.info("Directory already exists at: " + path.toAbsolutePath());
         }
     }
 
